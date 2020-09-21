@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="cz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="author" content="Jaroslav Hampejs">
+    <title>iSpendJS | Přihlášení</title>
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
+    <script src="{{ asset('javascript/Entities/Spending.js') }}"></script>
+    <script src="{{ asset('javascript/Entities/User.js') }}"></script>
+    <script src="{{ asset('javascript/Data.js') }}"></script>
+    <script src="{{ asset('javascript/Ui/Ui.js') }}"></script>
+    <script src="{{ asset('javascript/Ui/SharingUi.js') }}"></script>
+    <script src="{{ asset('javascript/Ui/SpendingUi.js') }}"></script>
+    <script src="{{ asset('javascript/App.js') }}"></script>
+    <script src="{{ asset('javascript/startUp.js') }}"></script>
+</head>
+<body>
+
+<div id="background"></div>
+<div id="content"></div>
+
+</body>
 </html>

@@ -1,0 +1,321 @@
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 2rem;
+    font-family: '-apple-system', 'HelveticaNeue', sans-serif;
+}
+
+#welcome {
+    display: flex;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 6rem 0;
+}
+
+#userList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin: auto;
+    background-color: rgba(30, 144, 255, 0.3);
+    border-radius: 0.75rem;
+}
+
+.user {
+    width: 3rem;
+    margin: 0.5rem;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    background: dodgerblue;
+    color: #FFFFFF;
+}
+
+.user:hover {
+    cursor: pointer;
+}
+
+.backgroundWrapLogged, .backgroundWrapLogIn {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+}
+
+.backgroundWrapLogIn {
+    background-image: url("visual/backgrounds/login1.png");
+}
+
+@media (prefers-color-scheme: light) {
+    .backgroundWrapLogged {
+        background-image: url("visual/backgrounds/ios14light_full.jpg");
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .backgroundWrapLogged {
+        background-image: url("visual/backgrounds/ios14dark_full.jpg");
+    }
+
+    #navbar {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+}
+
+#userAndLogout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+#logoutButton {
+    width: 2rem;
+    height: 2rem;
+}
+
+#logoutButton:hover {
+    cursor: pointer;
+}
+
+#activeUser {
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+#navContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#navbar, #addSpendingButtonContainer {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    font-weight: 500;
+    border-radius: 0.5rem;
+    background-color: rgba(215, 215, 215, 0.4);
+    -webkit-backdrop-filter: blur(0.6rem);
+}
+
+#addSpendingButton {
+    padding: 0.6rem 0.8rem;
+    margin: 0.35rem;
+    color: #FFFFFF;
+}
+
+#navbar {
+    margin-right: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    #navbar {
+        background-color: rgba(100, 100, 100, 0.4);
+    }
+}
+
+#navbar > div {
+    padding: 0.6rem 1.75rem;
+    margin: 0.35rem;
+    color: #FFFFFF;
+}
+
+#navbar > div:hover, #addSpendingButton:hover {
+    cursor: pointer;
+}
+
+.activeButton {
+    border-radius: 0.3rem;
+    background-color: rgba(220, 220, 220, 0.5);
+    -webkit-backdrop-filter: blur(0.5rem);
+}
+
+@media (prefers-color-scheme: dark) {
+    .activeButton {
+        background-color: rgba(150, 150, 150, 0.5);
+    }
+}
+
+#active {
+    display: flex;
+    justify-content: center;
+}
+
+#lastWeekBlock, #lastMonthBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#lastWeekBlockTitle, #lastMonthBlockTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+#lastWeekBlockBottom, #lastMonthBlockBottom {
+    display: flex;
+    justify-content: flex-end;
+    align-items: end;
+    margin-top: 1rem;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+#spendings, #overviewBlocks {
+    max-width: 48rem;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.spending, #lastWeekBlock, #lastMonthBlock {
+    width: 20rem;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 0.6rem;
+    background-color: rgba(220, 220, 220, 0.5);
+    -webkit-backdrop-filter: blur(1.5rem);
+    color: #FFFFFF;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media (prefers-color-scheme: dark) {
+    .spending, #lastWeekBlock, #lastMonthBlock {
+        background-color: rgba(150, 150, 150, 0.5);
+    }
+}
+
+.spending:hover, #lastWeekBlock:hover, #lastMonthBlock:hover {
+    cursor: pointer;
+}
+
+.sharing, .spendingTop, .spendingMiddle, .spendingBottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sharing {
+    margin-bottom: 0.2rem;
+    font-size: 0.85rem;
+}
+
+.sharingNotice {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.sharingSymbol {
+    margin-right: 0.3rem;
+    font-weight: 700;
+    color: green;
+}
+
+@media (prefers-color-scheme: dark) {
+    .sharingSymbol {
+        color: limegreen;
+    }
+}
+
+.fromTo {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.spendingArrow {
+    font-weight: 700;
+    margin: 0 0.3rem;
+    color: green;
+}
+
+@media (prefers-color-scheme: dark) {
+    .spendingArrow {
+        color: limegreen;
+    }
+}
+
+.spendingTop {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+
+.spendingPrice {
+    white-space: nowrap;
+}
+
+.spendingPortion {
+    font-size: 0.85rem;
+}
+
+.spendingMiddle, .spendingBottom {
+    align-items: flex-end;
+}
+
+.merchantLogo {
+    width: 4rem;
+    margin-left: 8rem;
+}
+
+@media screen and (max-width: 50rem) {
+    body {
+        margin: 1rem;
+    }
+
+    #welcome {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-top: 1rem;
+        margin-bottom: 4rem;
+    }
+
+    #userList {
+        margin: 0;
+    }
+
+    #content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #navContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #navbar > div {
+        padding: 0.3rem 0;
+        margin: 0.2rem;
+        width: 20vw;
+        text-align: center;
+        color: #FFFFFF;
+    }
+}
