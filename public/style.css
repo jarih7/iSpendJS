@@ -311,11 +311,48 @@ body {
         align-items: flex-start;
     }
 
+    #navbar {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
     #navbar > div {
         padding: 0.3rem 0;
         margin: 0.2rem;
-        width: 20vw;
+        width: 21vw;
         text-align: center;
         color: #FFFFFF;
     }
+
+    #active {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    #overviewBlocks, #spendings {
+        margin-top: 1rem;
+    }
+
+    #overviewBlocks > div, .spending {
+        width: 100%;
+        margin: 1rem 0 0 0;
+    }
+
+    #addSpendingButtonContainer {
+        width: fit-content;
+        height: fit-content;
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 1;
+    }
+
+    #addSpendingForm {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
 }
