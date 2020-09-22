@@ -11,13 +11,22 @@ class User {
         this.friends = null;
         this.friendOf = null;
         this._onSpendingsLoaded = (user) => {};
-
         this.loadSpendings();
+
+        this._onFriendsLoaded = (user) => {};
+        this.loadFriends();
     }
 
     set onSpendingsLoaded(call) {
         if (this.spendings === null)
             this._onSpendingsLoaded = call;
+        else
+            call(this);
+    }
+
+    set onFriendsLoaded(call) {
+        if (this.friends === null)
+            this._onFriendsLoaded = call;
         else
             call(this);
     }
@@ -32,11 +41,29 @@ class User {
             url: '/getSpendings',
             json: json,
             success: (spendings) => {
-                console.log('spendings', spendings);
+                console.log('spendings: ', spendings);
                 this.spendings = Spending.parseList(spendings);
                 this._onSpendingsLoaded(this);
             },
             error: () => console.error("Spendings not loaded")
+        });
+    }
+
+    loadFriends() {
+
+        let json = JSON.stringify({
+            id: this.id,
+        });
+
+        sendJson({
+            url: '/getFriends',
+            json: json,
+            success: (friends) => {
+                console.log('friends: ', friends);
+                this.friend = Friend.parseList(friends);
+                this._onFriendsLoaded(this);
+            },
+            error: () => console.error("Friends not loaded")
         });
     }
 }

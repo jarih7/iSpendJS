@@ -3,8 +3,16 @@
 class App {
 
     constructor() {
+        this._onMerchantsLoaded = (app) => {};
         this.ui = new Ui(this);
         this.start();
+    }
+
+    set onMerchantsLoaded(call) {
+        if (this.merchants === null)
+            this._onMerchantsLoaded = call;
+        else
+            call(this);
     }
 
     start() {
@@ -17,8 +25,22 @@ class App {
         });
     }
 
+    loadMerchants() {
+        sendJson({
+            url: '/getMerchants',
+            success: (merchants) => {
+                console.log('merchants: ', merchants);
+                this.merchants = Merchant.parseList(merchants);
+                this._onMerchantsLoaded(this);
+            },
+            error: () => console.error("Merchants not loaded")
+        });
+    }
 
     userLoaded(userData) {
+        console.log('loading merchants');
+        this.loadMerchants();
+
         this.user = new User(userData);
         this.ui.createPageLayout(this.user);
         this.overview();
@@ -54,6 +76,10 @@ class App {
 
     addSpending() {
         this.ui.clearActiveViewContent();
+
+        this.spendingForm = new SpendingForm(this);
+        //console.log('form: ', this.spendingForm);
+
         this.ui.displayAddSpending(this.user);
         console.log('adding a spending');
     }

@@ -1,16 +1,18 @@
 'use strict';
 
-class Merchant {
+class Friend {
 
     constructor(data) {
         this.id = data.id;
-        this.name = data.name;
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
+        this.username = data.username;
     }
 
     static parseList(dataList){
         let list = [];
         for(let data of dataList) 
-            list.push(new Merchant(data));
+            list.push(new Friend(data));
 
         return list;
     }

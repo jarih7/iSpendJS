@@ -348,68 +348,13 @@ class Ui {
     displayAddSpending(user) {
         this.switchView(this.addSpendingButton);
 
-        let l0 = document.createElement('label');
-        l0.setAttribute('for', 'merchant');
-        l0.innerHTML = 'merchant';
-
-        let in0 = document.createElement('select');
-        in0.setAttribute('name', 'merchant');
-
-        //options
-
-        let op0 = document.createElement('option');
-        op0.setAttribute('value', 'Billa');
-        op0.innerHTML = 'Billa';
-        in0.appendChild(op0);
-
-        //options
-
-        let l1 = document.createElement('label');
-        l1.setAttribute('for', 'spendingName');
-        l1.innerHTML = 'spending title';
-
-        let in1 = document.createElement('input');
-        in1.setAttribute('type', 'text');
-        in1.setAttribute('name', 'spendingName');
-        in1.setAttribute('placeholder', 'groceries');
-
-        let l2 = document.createElement('label');
-        l2.setAttribute('for', 'spendingPrice');
-        l2.innerHTML = 'spending price';
-
-        let in2 = document.createElement('input');
-        in2.setAttribute('name', 'spendingPrice');
-        in2.setAttribute('placeholder', '123.45');
-
-        let l3 = document.createElement('label');
-        l3.setAttribute('for', 'date');
-        l3.innerHTML = 'date';
-
-        let in3 = document.createElement('input');
-        in3.setAttribute('type', 'date');
-        in3.setAttribute('name', 'date');
-
-        let in4 = document.createElement('input');
-        in4.setAttribute('type', 'submit');
-        in4.setAttribute('value', 'Submit');
-
-        //form
-        let form = node({
-            type: 'form',
-            id: 'addSpendingForm',
-            child: [
-                l0,
-                in0,
-                l1,
-                in1,
-                l2,
-                in2,
-                in4
-            ]
+        let formContainer = node({
+            type: 'div',
+            id: 'formContainer',
+            child: this.app.spendingForm
         });
 
-        form.submit();
-        this.appendToActiveViewContent(form);
+        this.appendToActiveViewContent(formContainer);
     }
 
     switchView(button) {

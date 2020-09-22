@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Merchant;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -68,7 +69,6 @@ class BaseController extends AbstractController
 
         $id = strval($json["id"]);
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
-
         $spendings = $user->getSpendings();
 
         $jsonData = [];
@@ -94,5 +94,64 @@ class BaseController extends AbstractController
         }
 
         return new JsonResponse($jsonData);
+    }
+
+    /**
+     * @Route("/getFriends", name="getFriends")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function apiGetFriends(Request $request) {
+        $json = json_decode($request->getContent(), true);
+
+        $id = strval($json["id"]);
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        $friends = $user->getHasFriends();
+
+        $jsonData = [];
+        $length = sizeof($friends);
+
+        for ($i = 0; $i < $length; $i++) {
+            $friend = $friends[$i];
+
+            array_push($jsonData, [
+                'id' => $friend->getId(),
+                'firstName' => $friend->getFirstName(),
+                'lastName' => $friend->getLastName(),
+                'username' => $friend->getUsername()
+            ]);
+        }
+
+        return new JsonResponse($jsonData);
+    }
+
+    /**
+     * @Route("/getMerchants", name="getMerchants")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function apiGetMerchants(Request $request) {
+        $merchants = $this->getDoctrine()->getRepository(Merchant::class)->findAll();
+
+        $jsonData = [];
+        $length = sizeof($merchants);
+
+        for ($i = 0; $i < $length; $i++) {
+            $merchant = $merchants[$i];
+
+            array_push($jsonData, [
+                'id' => $merchant->getId(),
+                'name' => $merchant->getName()
+            ]);
+        }
+
+        return new JsonResponse($jsonData);
+    }
+
+
+    public function apiProcessNewSpending(Request $request) {
+        $json = json_decode($request->getContent(), true);
+
+        
     }
 }
