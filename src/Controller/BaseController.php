@@ -8,6 +8,7 @@ use App\Entity\Merchant;
 use App\Entity\Spending;
 use App\Entity\User;
 use DateTime;
+use DateTimeZone;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -154,28 +155,35 @@ class BaseController extends AbstractController
     /**
      * @Route("/processNewSpending", name="processNewSpending")
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      * @throws Exception
      */
     public function apiProcessNewSpending(Request $request) {
+        $json = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
-        $userId = $request->request->get('userId');
+        $userId = strval($json['userId']);
         $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
-        $spendingName = strval($request->request->get('spendingName'));
-        $spendingPrice = floatval($request->request->get('spendingPrice'));
-        $spendingPortion = floatval($request->request->get('spendingPortion'));
-        $merchantName = strval($request->request->get('merchant'));
+        $friendUsername = strval($json['friend']);
+
+        if ($friendUsername != 'nobody')
+            $friend = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $friendUsername]);
+        $spendingName = strval($json['spendingName']);
+        $spendingPrice = floatval($json['spendingPrice']);
+        $spendingPortion = floatval($json['spendingPortion']);
+        $merchantName = strval($json['merchantName']);
         $merchant = $this->getDoctrine()->getRepository(Merchant::class)->findOneBy(['name' => $merchantName]);
 
-        $spending = new Spending(1, $spendingName, $spendingPrice, $spendingPortion, new DateTime(), $merchant, $user);
+        echo 'MERCHANT ' . $merchantName;
+
+        $spending = new Spending(1, $spendingName, $spendingPrice, $spendingPortion, new DateTime('now', new DateTimeZone('Europe/Prague')), $merchant, $user);
+
+        if ($friendUsername != 'nobody')
+            $spending->setFriend($friend);
+
         $em->persist($spending);
         $em->flush();
 
-        return new Response(
-            'Content',
-            Response::HTTP_OK,
-            ['content-type' => 'text/html']
-        );
+        return new JsonResponse();
     }
 }

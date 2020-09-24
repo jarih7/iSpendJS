@@ -119,40 +119,47 @@ class SpendingForm {
     }
 
     prepSubmitSection() {
-        let submitButton = document.createElement('input');
-        submitButton.setAttribute('type', 'submit');
-        submitButton.setAttribute('value', 'Submit');
-        submitButton.setAttribute('id', 'submitButton');
-        this.form.appendChild(submitButton);
+        this.submitButton = node({
+            type: 'div',
+            id: 'submitButton',
+            html: 'Submit',
+            onclick: () => {
+                this.submitForm();
+                console.log('going back to history');
+                this.app.history();
+            }
+        });
 
-        console.log('PREP SUBMIT');
+        this.form.appendChild(this.submitButton);
+        //this.form.setAttribute('action', '/processNewSpending');
+        //this.form.setAttribute('method', 'post');
+    }
 
-        this.form.setAttribute('action', '/processNewSpending');
-        this.form.setAttribute('method', 'post');
-        this.form.onsubmit = function () {
-            this.app.history();
-        };
+    submitForm() {
+        console.log('event submit form');
 
-        /*
-        this.form.onsubmit = function() {
-            let json = JSON.stringify({
-                userId: this.app.user.id,
-                merchantName: document.getElementById('merchantOption').innerText,
-                spendingName: this.nameInput.innerText,
-                spendingPrice: this.priceInput.innerText,
-                spendingPortion: this.portionInput.innerText,
-                date: this.dateInput.innerText,
-                friend: this.friendOption.innerText
-            });
+        let merchantOpts = document.getElementById('merchantInput');
+        let selectedMerchant = merchantOpts.options[merchantOpts.selectedIndex].value;
 
-            sendJson({
-                url: '/processNewSpending',
-                json: json,
-                success: () => console.log('spending processed'),
-                error: () => console.error('spending not processed')
-            });
-        };
-        */
+        let friendOpts = document.getElementById('friendInput');
+        let selectedFriend = friendOpts.options[friendOpts.selectedIndex].value;
+
+        let json = JSON.stringify({
+            userId: this.app.user.id,
+            merchantName: selectedMerchant,
+            spendingName: this.nameInput.value,
+            spendingPrice: this.priceInput.value,
+            spendingPortion: this.portionInput.value,
+            date: this.dateInput.value,
+            friend: selectedFriend
+        });
+
+        sendJson({
+            url: '/processNewSpending',
+            json: json,
+            success: () => this.app.history(),
+            error: () => console.error('spending not processed')
+        });
     }
 
     appendDuo(label, input) {
