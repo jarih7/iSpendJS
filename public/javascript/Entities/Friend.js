@@ -11,6 +11,14 @@ class Friend {
 
     static parseList(dataList){
         let list = [];
+        
+        list.push(new Friend({
+            id: 0,
+            firstName: 'no',
+            lastName: 'friend',
+            username: 'nobody'
+        }));
+
         for(let data of dataList) 
             list.push(new Friend(data));
 

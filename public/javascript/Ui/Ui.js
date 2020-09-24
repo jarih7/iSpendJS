@@ -32,12 +32,10 @@ function node(options) {
             e.appendChild(options.child);
     }
 
-    if (options.onclick) {
+    if (options.onclick)
         e.onclick = options.onclick;
-    }
 
-    if (options.onmouseenter && options.onmouseleave)
-    {
+    if (options.onmouseenter && options.onmouseleave) {
         e.onmouseenter = options.onmouseenter;
         e.onmouseleave = options.onmouseleave;
     }
@@ -53,6 +51,7 @@ class Ui {
         this.activeUser = document.getElementById('activeUser');
         this.content = document.getElementById('content');
         this.background = document.getElementById('background');
+        this.title = document.getElementById('title');
 
         this.navbar = null;
         this.overviewButton = null;
@@ -82,6 +81,7 @@ class Ui {
     }
 
     createLoginScreen(userList) {
+        this.switchTitle('iSpend | Log-In');
         let users = [];
 
         for (let user of userList) {
@@ -95,17 +95,8 @@ class Ui {
             }));
         }
 
-        let list = node({
-            type: 'div',
-            id: 'userList',
-            child: users
-        });
-
-        let welcome = node({
-            type: 'div',
-            id: 'welcome',
-            html: 'iSpend log-in'
-        });
+        let list = node({ type: 'div', id: 'userList', child: users });
+        let welcome = node({ type: 'div', id: 'welcome', html: 'iSpend log-in' });
 
         this.appendToContent(welcome);
         this.appendToContent(list);
@@ -218,7 +209,44 @@ class Ui {
         this.navbar = navContainer;
     }
 
+    createOverviewBlock(timeSpan, today, minus, sum) {
+        let html = 'from ' + minus.toLocaleString('en-EN', {month: 'long'}) + ' '
+        + minus.getDate() + ' to ' + today.toLocaleString('en-EN', {month: 'long'}) + ' '
+        + today.getDate();
+    
+        let sumHtml = sum + ' Kč';
+
+        return node({
+            type: 'div',
+            id: 'last' + timeSpan + 'Block',
+            child: [
+                node({
+                    type: 'div',
+                    id: 'last' + timeSpan + 'BlockTop',
+                    child: [
+                        node({
+                            type: 'div',
+                            id: 'last' + timeSpan + 'BlockTitle',
+                            html: 'Last ' + timeSpan
+                        }),
+                        node({
+                            type:'div',
+                            id: 'last' + timeSpan + 'BlockDates',
+                            html: html
+                        })
+                    ]
+                }),
+                node({
+                    type: 'div',
+                    id: 'last' + timeSpan + 'BlockBottom',
+                    html: sumHtml
+                })
+            ]
+        });
+    }
+
     displayOverview(user) {
+        this.switchTitle('iSpend | Overview');
         this.switchView(this.overviewButton);
         //spendings already filled
         
@@ -247,65 +275,8 @@ class Ui {
             }
         }
 
-        let lastWeekBlock = node({
-            type: 'div',
-            id: 'lastWeekBlock',
-            child: [
-                node({
-                    type: 'div',
-                    id: 'lastWeekBlockTop',
-                    child: [
-                        node({
-                            type: 'div',
-                            id: 'lastWeekBlockTitle',
-                            html: 'last week'
-                        }),
-                        node({
-                            type: 'div',
-                            id: 'lastWeekBlockDates',
-                            html: 'from ' + minusWeek.toLocaleString('en-EN', {month: 'long'}) + ' '
-                            + minusWeek.getDate() + ' to ' + today.toLocaleString('en-EN', {month: 'long'}) + ' '
-                            + today.getDate()
-                        })
-                    ]
-                }),
-                node({
-                    type: 'div',
-                    id: 'lastWeekBlockBottom',
-                    html: lastWeekSum + ' Kč'
-                })
-            ]
-        });
-
-        let lastMonthBlock = node({
-            type: 'div',
-            id: 'lastMonthBlock',
-            child: [
-                node({
-                    type: 'div',
-                    id: 'lastMonthBlockTop',
-                    child: [
-                        node({
-                            type: 'div',
-                            id: 'lastMonthBlockTitle',
-                            html: 'last month'
-                        }),
-                        node({
-                            type:'div',
-                            id: 'lastMonthBlockDates',
-                            html: 'from ' + minusMonth.toLocaleString('en-EN', {month: 'long'}) + ' '
-                            + minusMonth.getDate() + ' to ' + today.toLocaleString('en-EN', {month: 'long'}) + ' '
-                            + today.getDate()
-                        })
-                    ]
-                }),
-                node({
-                    type: 'div',
-                    id: 'lastMonthBlockBottom',
-                    html: lastMonthSum + ' Kč'
-                })
-            ]
-        });
+        let lastWeekBlock = this.createOverviewBlock('Week', today, minusWeek, lastWeekSum);
+        let lastMonthBlock = this.createOverviewBlock('Month', today, minusMonth, lastMonthSum);
 
         let overviewBlocks = node({
             type: 'div',
@@ -320,40 +291,33 @@ class Ui {
     }
 
     displayHistory(user) {
+        this.switchTitle('iSpend | History');
         this.switchView(this.historyButton);
 
         let spendings = [];
 
-        for (let spending of user.spendings) {
-            spendings.push(spending.ui.drawSelf())
-        }
+        for (let spending of user.spendings)
+            spendings.push(spending.ui.drawSelf());
 
-        let list = node({
-            type: 'div',
-            id: 'spendings',
-            child: spendings
-        });
-
+        let list = node({ type: 'div', id: 'spendings', child: spendings });
         this.appendToActiveViewContent(list);
     }
 
     displaySearch(user) {
+        this.switchTitle('iSpend | Search');
         this.switchView(this.searchButton);
     }
 
     displaySettings(user) {
+        this.switchTitle('iSpend | Settings');
         this.switchView(this.settingsButton);
     }
 
     displayAddSpending(user) {
+        this.switchTitle('iSpend | New Spending');
         this.switchView(this.addSpendingButton);
 
-        let formContainer = node({
-            type: 'div',
-            id: 'formContainer',
-            child: this.app.spendingForm
-        });
-
+        let formContainer = node({ type: 'div', id: 'formContainer', child: this.app.spendingForm });
         this.appendToActiveViewContent(formContainer);
     }
 
@@ -361,6 +325,10 @@ class Ui {
         this.activeButton.className = '';
         button.className = 'activeButton';
         this.activeButton = button;
+    }
+
+    switchTitle(title) {
+        this.title.innerText = title;
     }
 
 }

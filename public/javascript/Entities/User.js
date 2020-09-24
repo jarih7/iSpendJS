@@ -60,7 +60,7 @@ class User {
             json: json,
             success: (friends) => {
                 console.log('friends: ', friends);
-                this.friend = Friend.parseList(friends);
+                this.friends = Friend.parseList(friends);
                 this._onFriendsLoaded(this);
             },
             error: () => console.error("Friends not loaded")

@@ -10,37 +10,13 @@ class SharingUi {
         });
 
         if (userId == spendingUserId) {
-            fromTo.appendChild(node({
-                type: 'div',
-                class: 'spendingMe',
-                html: username
-            }));
-            fromTo.appendChild(node({
-                type: 'div',
-                class: 'spendingArrow',
-                html: '&#8594;'
-            }));
-            fromTo.appendChild(node({
-                type: 'div',
-                class: 'spendingFriend',
-                html: friendUsername
-            }));
+            fromTo.appendChild(node({ type: 'div', class: 'spendingMe', html: username }));
+            fromTo.appendChild(node({ type: 'div', class: 'spendingArrow', html: '&#8594;' }));
+            fromTo.appendChild(node({ type: 'div', class: 'spendingFriend', html: friendUsername }));
         } else {
-            fromTo.appendChild(node({
-                type: 'div',
-                class: 'spendingMe',
-                html: friendUsername
-            }));
-            fromTo.appendChild(node({
-                type: 'div',
-                class: 'spendingArrow',
-                html: '&#8592;'
-            }));
-            fromTo.appendChild(node({
-                type: 'div',
-                class: 'spendingFriend',
-                html: username
-            }));
+            fromTo.appendChild(node({ type: 'div', class: 'spendingMe', html: friendUsername }));
+            fromTo.appendChild(node({ type: 'div', class: 'spendingArrow', html: '&#8592;' }));
+            fromTo.appendChild(node({ type: 'div', class: 'spendingFriend', html: username }));
         }
 
         this.mainBlock = node({

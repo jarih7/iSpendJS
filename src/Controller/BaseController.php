@@ -5,7 +5,10 @@ namespace App\Controller;
 
 
 use App\Entity\Merchant;
+use App\Entity\Spending;
 use App\Entity\User;
+use DateTime;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -148,10 +151,31 @@ class BaseController extends AbstractController
         return new JsonResponse($jsonData);
     }
 
-
+    /**
+     * @Route("/processNewSpending", name="processNewSpending")
+     * @param Request $request
+     * @return Response
+     * @throws Exception
+     */
     public function apiProcessNewSpending(Request $request) {
-        $json = json_decode($request->getContent(), true);
+        $em = $this->getDoctrine()->getManager();
 
-        
+        $userId = $request->request->get('userId');
+        $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+        $spendingName = strval($request->request->get('spendingName'));
+        $spendingPrice = floatval($request->request->get('spendingPrice'));
+        $spendingPortion = floatval($request->request->get('spendingPortion'));
+        $merchantName = strval($request->request->get('merchant'));
+        $merchant = $this->getDoctrine()->getRepository(Merchant::class)->findOneBy(['name' => $merchantName]);
+
+        $spending = new Spending(1, $spendingName, $spendingPrice, $spendingPortion, new DateTime(), $merchant, $user);
+        $em->persist($spending);
+        $em->flush();
+
+        return new Response(
+            'Content',
+            Response::HTTP_OK,
+            ['content-type' => 'text/html']
+        );
     }
 }

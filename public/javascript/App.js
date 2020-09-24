@@ -49,6 +49,7 @@ class App {
     overview() {
         this.ui.clearActiveViewContent();
 
+
         this.user.onSpendingsLoaded = (user) => {
             this.ui.displayOverview(user);
         };
@@ -76,10 +77,7 @@ class App {
 
     addSpending() {
         this.ui.clearActiveViewContent();
-
         this.spendingForm = new SpendingForm(this);
-        //console.log('form: ', this.spendingForm);
-
         this.ui.displayAddSpending(this.user);
         console.log('adding a spending');
     }

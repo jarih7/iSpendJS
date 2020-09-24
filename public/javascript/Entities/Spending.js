@@ -8,7 +8,7 @@ class Spending {
         this.price = data.price;
         this.portion = data.portion;
 
-        let dateTimeString = new String(data.date);
+        let dateTimeString = new String(data.date.date);
         let dateString = dateTimeString.split(' ')[0];
         this.date = new Date(dateString);
 

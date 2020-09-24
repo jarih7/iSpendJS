@@ -1,5 +1,13 @@
 'use strict';
 
+function compareString(a, b) {
+    if (a.name < b.name)
+        return -1;
+    if (a.name > b.name)
+        return 1;
+    return 0;
+}
+
 class Merchant {
 
     constructor(data) {
@@ -12,6 +20,7 @@ class Merchant {
         for(let data of dataList) 
             list.push(new Merchant(data));
 
+        list.sort(compareString);
         return list;
     }
 }
