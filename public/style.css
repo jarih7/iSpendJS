@@ -67,10 +67,6 @@ body {
     .backgroundWrapLogged {
         background-image: url("visual/backgrounds/ios14dark_full.jpg");
     }
-
-    #navbar {
-        background-color: rgba(0, 0, 0, 0.4);
-    }
 }
 
 #userAndLogout {
@@ -126,8 +122,8 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-    #navbar {
-        background-color: rgba(100, 100, 100, 0.4);
+    #navbar, #addSpendingButtonContainer {
+        background-color: rgba(120, 120, 120, 0.4);
     }
 }
 
@@ -279,7 +275,6 @@ body {
 
 .merchantLogo {
     width: 4rem;
-    margin-left: 8rem;
 }
 
 #spendingForm {
@@ -347,6 +342,10 @@ body {
         margin-top: 1rem;
     }
 
+    .activeButton {
+        border-radius: 0.35rem;
+    }
+
     #overviewBlocks > div, .spending {
         width: 100%;
         margin: 1rem 0 0 0;
@@ -359,6 +358,13 @@ body {
         bottom: 1rem;
         right: 1rem;
         z-index: 1;
+
+        background-color: rgba(170, 170, 170, 0.5);
+    }
+
+    #addSpendingButton {
+        margin: 0.2rem;
+        padding: 0.5rem;
     }
 
     #addSpendingForm {
