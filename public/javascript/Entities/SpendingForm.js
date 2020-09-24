@@ -18,27 +18,25 @@ class SpendingForm {
 
     prepUserId() {
         this.userId = document.createElement('input');
-        this.userId.setAttribute('type', 'text');
+        this.userId.type = 'text';
         this.userId.value = this.app.user.id;
-        console.log('inserting user id', this.app.user.id);
-        this.userId.setAttribute('name', 'userId');
-        this.userId.setAttribute('id', 'userId');
-
-        this.form.appendChild(this.userId);
+        this.userId.name = 'userId';
+        this.userId.id = 'userId';
     }
 
     prepMerchantSection() {
         this.merchantLabel = document.createElement('label');
-        this.merchantLabel.setAttribute('for', 'merchant');
+        this.merchantLabel.htmlFor = 'merchant';
         this.merchantLabel.innerHTML = 'merchant';
         this.merchantInput = document.createElement('select');
-        this.merchantInput.setAttribute('name', 'merchant');
-        this.merchantInput.setAttribute('id', 'merchantInput');
+        this.merchantInput.name = 'merchant';
+        this.merchantInput.id = 'merchantInput';
+        this.merchantInput.required = true;
 
         for (let merchant of this.app.merchants) {
             let merchantOption = document.createElement('option');
-            merchantOption.setAttribute('value', merchant.name);
-            merchantOption.setAttribute('id', 'merchantOption');
+            merchantOption.value = merchant.name;
+            merchantOption.id = 'merchantOption';
             merchantOption.innerHTML = merchant.name;
             this.merchantInput.appendChild(merchantOption);
         }
@@ -48,70 +46,78 @@ class SpendingForm {
 
     prepNameSection() {
         this.nameLabel = document.createElement('label');
-        this.nameLabel.setAttribute('for', 'spendingName');
+        this.nameLabel.htmlFor = 'spendingName';
         this.nameLabel.innerHTML = 'spending title';
         this.nameInput = document.createElement('input');
-        this.nameInput.setAttribute('type', 'text');
-        this.nameInput.setAttribute('name', 'spendingName');
-        this.nameInput.setAttribute('placeholder', 'groceries');
-        this.nameInput.setAttribute('id', 'spendingName');
-
+        this.nameInput.type = 'text';
+        this.nameInput.name = 'spendingName';
+        //this.nameInput.placeholder = 'groceries';
+        this.nameInput.id = 'spendingName';
+        this.nameInput.required = true;
         this.appendDuo(this.nameLabel, this.nameInput);
     }
 
     prepPriceSection() {
         this.priceLabel = document.createElement('label');
-        this.priceLabel.setAttribute('for', 'spendingPrice');
+        this.priceLabel.htmlFor = 'spendingPrice';
         this.priceLabel.innerHTML = 'spending price';
         this.priceInput = document.createElement('input');
-        this.priceInput.setAttribute('type', 'text');
-        this.priceInput.setAttribute('name', 'spendingPrice');
-        this.priceInput.setAttribute('id', 'priceInput');
-        this.priceInput.setAttribute('placeholder', '123.45');
-
+        this.priceInput.type = 'text';
+        this.priceInput.name = 'spendingPrice';
+        this.priceInput.id = 'priceInput';
+        //this.priceInput.placeholder = '123.45';
+        this.priceInput.required = true;
         this.appendDuo(this.priceLabel, this.priceInput);
     }
 
     prepPortionSection() {
         this.portionLabel = document.createElement('label');
-        this.portionLabel.setAttribute('for', 'spendingPortion');
+        this.portionLabel.htmlFor = 'spendingPortion';
         this.portionLabel.innerHTML = 'spending portion';
-        this.portionInput = document.createElement('input');
-        this.portionInput.setAttribute('type', 'text');
-        this.portionInput.setAttribute('name', 'spendingPortion');
-        this.portionInput.setAttribute('id', 'portionInput');
-        this.portionInput.setAttribute('placeholder', '0.5');
+        this.portionInput = document.createElement('select');
+        this.portionInput.name = 'spendingPortion';
+        this.portionInput.id = 'portionInput';
+        this.portionInput.required = true;
+
+        for (let portion of this.app.portions) {
+            let portionOption = document.createElement('option');
+            portionOption.value = portion.value;
+            portionOption.innerHTML = portion.value;
+            portionOption.className = 'portionOption';
+            this.portionInput.appendChild(portionOption);
+        }
 
         this.appendDuo(this.portionLabel, this.portionInput);
     }
 
     prepDateSection() {
         this.dateLabel = document.createElement('label');
-        this.dateLabel.setAttribute('for', 'date');
+        this.dateLabel.htmlFor = 'date';
         this.dateLabel.innerHTML = 'date';
         this.dateInput = document.createElement('input');
-        this.dateInput.setAttribute('type', 'date');
-        this.dateInput.setAttribute('name', 'date');
-        this.dateInput.setAttribute('id', 'dateInput');
-
+        this.dateInput.type = 'date';
+        this.dateInput.name = 'date';
+        this.dateInput.id = 'dateInput';
+        this.dateInput.required = false;
         //this.appendDuo(this.dateLabel, this.dateInput);
     }
 
     prepFriendSection() {
         this.friendLabel = document.createElement('label');
-        this.friendLabel.setAttribute('for', 'friend');
+        this.friendLabel.htmlFor = 'friend';
         this.friendLabel.innerHTML = 'friend';
         this.friendInput = document.createElement('select');
-        this.friendInput.setAttribute('name', 'friend');
-        this.friendInput.setAttribute('id', 'friendInput');
+        this.friendInput.name = 'friend';
+        this.friendInput.id = 'friendInput';
+        this.friendInput.required = true;
 
         console.log('this app user friends:', this.app.user.friends);
 
         for (let friend of this.app.user.friends) {
             let friendOption = document.createElement('option');
-            friendOption.setAttribute('value', friend.username);
-            friendOption.setAttribute('id', 'friendOption');
+            friendOption.value = friend.username;
             friendOption.innerHTML = friend.username;
+            friendOption.className = 'friendOption';
             this.friendInput.appendChild(friendOption);
         }
 
@@ -131,8 +137,6 @@ class SpendingForm {
         });
 
         this.form.appendChild(this.submitButton);
-        //this.form.setAttribute('action', '/processNewSpending');
-        //this.form.setAttribute('method', 'post');
     }
 
     submitForm() {
@@ -144,12 +148,15 @@ class SpendingForm {
         let friendOpts = document.getElementById('friendInput');
         let selectedFriend = friendOpts.options[friendOpts.selectedIndex].value;
 
+        let portionOpts = document.getElementById('portionInput');
+        let selectedPortion = portionOpts.options[portionOpts.selectedIndex].value;
+
         let json = JSON.stringify({
             userId: this.app.user.id,
             merchantName: selectedMerchant,
             spendingName: this.nameInput.value,
             spendingPrice: this.priceInput.value,
-            spendingPortion: this.portionInput.value,
+            spendingPortion: selectedPortion,
             date: this.dateInput.value,
             friend: selectedFriend
         });
