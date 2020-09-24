@@ -5,16 +5,7 @@ class App {
     constructor() {
         this._onMerchantsLoaded = (app) => {};
         this.ui = new Ui(this);
-        this.portions = [
-            {
-                name: 'full',
-                value: 1
-            },
-            {
-                name: 'half',
-                value: 0.5
-            }
-        ];
+        this.setupPortions();
         this.start();
     }
 
@@ -23,6 +14,13 @@ class App {
             this._onMerchantsLoaded = call;
         else
             call(this);
+    }
+
+    setupPortions() {
+        this.portions = [
+            { name: 'full', value: 1 },
+            { name: 'half', value: 0.5 }
+        ];
     }
 
     start() {

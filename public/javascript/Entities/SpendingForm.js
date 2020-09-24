@@ -4,6 +4,9 @@ class SpendingForm {
     constructor(app) {
         this.app = app;
         this.form = document.createElement('form');
+        this.form.id = 'spendingForm';
+        this.priceAndPortion = document.createElement('div');
+        this.priceAndPortion.id = 'priceAndPortion';
         this.prepUserId();
         this.prepMerchantSection();
         this.prepNameSection();
@@ -41,7 +44,7 @@ class SpendingForm {
             this.merchantInput.appendChild(merchantOption);
         }
 
-        this.appendDuo(this.merchantLabel, this.merchantInput);
+        this.appendDuo(this.merchantLabel, this.merchantInput, this.form);
     }
 
     prepNameSection() {
@@ -51,10 +54,10 @@ class SpendingForm {
         this.nameInput = document.createElement('input');
         this.nameInput.type = 'text';
         this.nameInput.name = 'spendingName';
-        //this.nameInput.placeholder = 'groceries';
+        this.nameInput.placeholder = 'groceries';
         this.nameInput.id = 'spendingName';
         this.nameInput.required = true;
-        this.appendDuo(this.nameLabel, this.nameInput);
+        this.appendDuo(this.nameLabel, this.nameInput, this.form);
     }
 
     prepPriceSection() {
@@ -65,9 +68,9 @@ class SpendingForm {
         this.priceInput.type = 'text';
         this.priceInput.name = 'spendingPrice';
         this.priceInput.id = 'priceInput';
-        //this.priceInput.placeholder = '123.45';
+        this.priceInput.placeholder = '123.45';
         this.priceInput.required = true;
-        this.appendDuo(this.priceLabel, this.priceInput);
+        this.appendDuo(this.priceLabel, this.priceInput, this.priceAndPortion);
     }
 
     prepPortionSection() {
@@ -87,7 +90,8 @@ class SpendingForm {
             this.portionInput.appendChild(portionOption);
         }
 
-        this.appendDuo(this.portionLabel, this.portionInput);
+        this.appendDuo(this.portionLabel, this.portionInput, this.priceAndPortion);
+        this.form.appendChild(this.priceAndPortion);
     }
 
     prepDateSection() {
@@ -121,7 +125,7 @@ class SpendingForm {
             this.friendInput.appendChild(friendOption);
         }
 
-        this.appendDuo(this.friendLabel, this.friendInput);
+        this.appendDuo(this.friendLabel, this.friendInput, this.form);
     }
 
     prepSubmitSection() {
@@ -169,8 +173,16 @@ class SpendingForm {
         });
     }
 
-    appendDuo(label, input) {
-        this.form.appendChild(label);
-        this.form.appendChild(input);
+    appendDuo(label, input, target) {
+        let pair = node({
+            type: 'div',
+            class: 'formPair',
+            child: [
+                label,
+                input
+            ]
+        });
+
+        target.appendChild(pair);
     }
 }

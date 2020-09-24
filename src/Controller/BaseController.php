@@ -174,8 +174,6 @@ class BaseController extends AbstractController
         $merchantName = strval($json['merchantName']);
         $merchant = $this->getDoctrine()->getRepository(Merchant::class)->findOneBy(['name' => $merchantName]);
 
-        echo 'MERCHANT ' . $merchantName;
-
         $spending = new Spending(1, $spendingName, $spendingPrice, $spendingPortion, new DateTime('now', new DateTimeZone('Europe/Prague')), $merchant, $user);
 
         if ($friendUsername != 'nobody')

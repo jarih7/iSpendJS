@@ -156,6 +156,7 @@ body {
 #active {
     display: flex;
     justify-content: center;
+    margin-top: 2rem;
 }
 
 #lastWeekBlock, #lastMonthBlock {
@@ -181,11 +182,11 @@ body {
 
 #spendings, #overviewBlocks {
     max-width: 48rem;
-    margin-top: 2rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+    justify-self: center;
 }
 
 .spending, #lastWeekBlock, #lastMonthBlock {
@@ -262,7 +263,6 @@ body {
 .spendingTop {
     font-weight: 700;
     font-size: 1.1rem;
-    margin-bottom: 0.2rem;
 }
 
 .spendingPrice {
@@ -280,6 +280,21 @@ body {
 .merchantLogo {
     width: 4rem;
     margin-left: 8rem;
+}
+
+#spendingForm {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+
+    background-color: rgba(220, 220, 220, 0.5);
+    -webkit-backdrop-filter: blur(0.5rem);
+}
+
+@media (prefers-color-scheme: dark) {
+    #spendingForm {
+        background-color: rgba(150, 150, 150, 0.5);
+    }
 }
 
 @media screen and (max-width: 50rem) {
@@ -328,10 +343,7 @@ body {
 
     #active {
         width: 100%;
-        justify-content: flex-start;
-    }
-
-    #overviewBlocks, #spendings {
+        justify-content: center;
         margin-top: 1rem;
     }
 
@@ -355,4 +367,22 @@ body {
         justify-content: flex-start;
     }
 
+    #formContainer {
+        width: 100%;
+    }
+
+    .formPair {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #priceAndPortion {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    #priceAndPortion > div {
+        width: 48%;
+    }
 }
