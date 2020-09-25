@@ -285,6 +285,17 @@ body {
     -webkit-backdrop-filter: blur(0.5rem);
 }
 
+#submitButton {
+    text-align: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 1rem;
+    background-color: rgba(220, 220, 220, 0.5);
+    color: #FFFFFF;
+    font-weight: 500;
+    border-radius: 0.35rem;
+}
+
 @media (prefers-color-scheme: dark) {
     #spendingForm {
         background-color: rgba(150, 150, 150, 0.5);
