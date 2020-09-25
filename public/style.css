@@ -177,16 +177,15 @@ body {
 }
 
 #spendings, #overviewBlocks {
-    max-width: 48rem;
+    width: 45rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    justify-self: center;
 }
 
 .spending, #lastWeekBlock, #lastMonthBlock {
-    width: 20rem;
+    width: 18rem;
     padding: 1rem;
     margin: 1rem;
     border-radius: 0.6rem;
@@ -300,12 +299,16 @@ body {
     #welcome {
         font-size: 2.5rem;
         font-weight: 700;
-        margin-top: 1rem;
-        margin-bottom: 4rem;
+        margin-top: 20vh;
+        margin-bottom: 5vh;
     }
 
     #userList {
         margin: 0;
+    }
+
+    #header {
+        width: 100%;
     }
 
     #content {
@@ -346,9 +349,10 @@ body {
         border-radius: 0.35rem;
     }
 
-    #overviewBlocks > div, .spending {
+    #lastWeekBlock, #lastMonthBlock, .spending {
         width: 100%;
         margin: 1rem 0 0 0;
+        justify-self: center;
     }
 
     #addSpendingButtonContainer {
@@ -392,3 +396,4 @@ body {
         width: 48%;
     }
 }
+
