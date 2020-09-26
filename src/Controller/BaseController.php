@@ -51,7 +51,8 @@ class BaseController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      */
-    public function apiGetUsers(Request $request) {
+    public function apiGetUsers(Request $request)
+    {
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         $jsonData = [];
 
@@ -80,19 +81,18 @@ class BaseController extends AbstractController
 
         for ($i = 0; $i < $length; $i++) {
             $friend = $spendings[$i]->getFriend();
+            $friendId = 0;
+            $friendUsername = '';
 
-            if ($friend === null) {
-                $friendId = 0;
-                $friendUsername = '';
-            } else {
+            if ($friend != null) {
                 $friendId = $friend->getId();
                 $friendUsername = $friend->getUsername();
             }
 
-            array_push($jsonData, ['id'         => $spendings[$i]->getId(), 'name' => $spendings[$i]->getName(),
-                                   'price'      => $spendings[$i]->getPrice(), 'portion' => $spendings[$i]->getPortion(),
-                                   'date' => $spendings[$i]->getDate(), 'userId' => $spendings[$i]->getUser()->getId(),
-                                   'username' => $spendings[$i]->getUser()->getUsername(),
+            array_push($jsonData, ['id'             => $spendings[$i]->getId(), 'name' => $spendings[$i]->getName(),
+                                   'price'          => $spendings[$i]->getPrice(), 'portion' => $spendings[$i]->getPortion(),
+                                   'date'           => $spendings[$i]->getDate(), 'userId' => $spendings[$i]->getUser()->getId(),
+                                   'username'       => $spendings[$i]->getUser()->getUsername(),
                                    'spendingUserId' => $spendings[$i]->getUser()->getId(), 'friendId' => $friendId,
                                    'friendUsername' => $friendUsername, 'merchantName' => $spendings[$i]->getMerchant()->getName()]);
         }
@@ -105,7 +105,8 @@ class BaseController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      */
-    public function apiGetFriends(Request $request) {
+    public function apiGetFriends(Request $request)
+    {
         $json = json_decode($request->getContent(), true);
 
         $id = strval($json["id"]);
@@ -119,10 +120,10 @@ class BaseController extends AbstractController
             $friend = $friends[$i];
 
             array_push($jsonData, [
-                'id' => $friend->getId(),
+                'id'        => $friend->getId(),
                 'firstName' => $friend->getFirstName(),
-                'lastName' => $friend->getLastName(),
-                'username' => $friend->getUsername()
+                'lastName'  => $friend->getLastName(),
+                'username'  => $friend->getUsername()
             ]);
         }
 
@@ -134,7 +135,8 @@ class BaseController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      */
-    public function apiGetMerchants(Request $request) {
+    public function apiGetMerchants(Request $request)
+    {
         $merchants = $this->getDoctrine()->getRepository(Merchant::class)->findAll();
 
         $jsonData = [];
@@ -144,7 +146,7 @@ class BaseController extends AbstractController
             $merchant = $merchants[$i];
 
             array_push($jsonData, [
-                'id' => $merchant->getId(),
+                'id'   => $merchant->getId(),
                 'name' => $merchant->getName()
             ]);
         }
@@ -158,13 +160,16 @@ class BaseController extends AbstractController
      * @return JsonResponse
      * @throws Exception
      */
-    public function apiProcessNewSpending(Request $request) {
+    public function apiProcessNewSpending(Request $request)
+    {
         $json = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
         $userId = strval($json['userId']);
         $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
         $friendUsername = strval($json['friend']);
+
+        $friend = null;
 
         if ($friendUsername != 'nobody')
             $friend = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $friendUsername]);
@@ -182,6 +187,22 @@ class BaseController extends AbstractController
         $em->persist($spending);
         $em->flush();
 
-        return new JsonResponse();
+        $jsonData = [];
+        $friendId = 0;
+        $friendUsername = '';
+
+        if ($friend != null) {
+            $friendId = $friend->getId();
+            $friendUsername = $friend->getUsername();
+        }
+
+        array_push($jsonData, ['id'             => $spending->getId(),
+                               'name'           => $spending->getName(), 'price' => $spending->getPrice(),
+                               'portion'        => $spending->getPortion(), 'date' => $spending->getDate(),
+                               'userId'         => $spending->getUser()->getId(), 'username' => $spending->getUser()->getUsername(),
+                               'spendingUserId' => $spending->getUser()->getId(), 'friendId' => $friendId,
+                               'friendUsername' => $friendUsername, 'merchantName' => $spending->getMerchant()->getName()]);
+
+        return new JsonResponse($jsonData);
     }
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-function compareString(a, b) {
+function compareMerchants(a, b) {
     if (a.name < b.name)
         return -1;
     if (a.name > b.name)
@@ -20,7 +20,7 @@ class Merchant {
         for(let data of dataList) 
             list.push(new Merchant(data));
 
-        list.sort(compareString);
+        list.sort(compareMerchants);
         return list;
     }
 }

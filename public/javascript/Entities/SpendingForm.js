@@ -144,8 +144,6 @@ class SpendingForm {
     }
 
     submitForm() {
-        console.log('event submit form');
-
         let merchantOpts = document.getElementById('merchantInput');
         let selectedMerchant = merchantOpts.options[merchantOpts.selectedIndex].value;
 
@@ -168,9 +166,13 @@ class SpendingForm {
         sendJson({
             url: '/processNewSpending',
             json: json,
-            success: () => this.app.history(),
+            success: (spending) => this.addNewSpending(spending),
             error: () => console.error('spending not processed')
         });
+    }
+
+    addNewSpending(spending) {
+        //add new spending from json data received above
     }
 
     appendDuo(label, input, target) {

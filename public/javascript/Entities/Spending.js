@@ -1,5 +1,13 @@
 'use strict';
 
+function compareSpendings(a, b) {
+    if (a.date.getTime() < b.date.getTime())
+        return 1;
+    if (a.date.getTime() > b.date.getTime())
+        return -1;
+    return 0;
+}
+
 class Spending {
 
     constructor(data) {
@@ -26,6 +34,7 @@ class Spending {
         for(let data of dataList) 
             list.push(new Spending(data));
 
+        list.sort(compareSpendings);
         return list;
     }
 
