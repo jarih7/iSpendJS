@@ -96,7 +96,7 @@ class Ui {
         }
 
         let list = node({ type: 'div', id: 'userList', child: users });
-        let welcome = node({ type: 'div', id: 'welcome', html: 'iSpend log-in' });
+        let welcome = node({ type: 'div', id: 'welcome', html: 'iSpend' });
 
         this.appendToContent(welcome);
         this.appendToContent(list);

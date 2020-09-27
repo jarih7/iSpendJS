@@ -21,11 +21,14 @@ body {
     align-items: center;
     width: fit-content;
     margin: auto;
-    background-color: rgba(30, 144, 255, 0.3);
+    background-color: rgba(240, 240, 240, 0.6);
+    -webkit-backdrop-filter: blur(0.6rem);
     border-radius: 0.75rem;
 }
 
 .user {
+    font-weight: 600;
+    font-size: 1.1rem;
     width: 3rem;
     margin: 0.5rem;
     padding: 1rem 2rem;
@@ -41,7 +44,7 @@ body {
     cursor: pointer;
 }
 
-.backgroundWrapLogged, .backgroundWrapLogIn {
+.backgroundWrapLogged {
     z-index: -1;
     position: fixed;
     top: 0;
@@ -54,17 +57,23 @@ body {
 }
 
 .backgroundWrapLogIn {
-    background-image: url("visual/backgrounds/login1.png");
+    background-image: url("visual/backgrounds/kitty.png");
+    z-index: -1;
+    position: absolute;
+    top: 10rem;
+    height: 60vh;
+    width: 90vw;
+    background-repeat: no-repeat;
 }
 
 @media (prefers-color-scheme: light) {
-    @media (max-height: 1440px){
+    @media (max-height: 1440px) {
         .backgroundWrapLogged {
             background-image: url("visual/backgrounds/ios14light_1920.jpg");
         }
     }
 
-    @media (min-height: 1441px){
+    @media (min-height: 1441px) {
         .backgroundWrapLogged {
             background-image: url("visual/backgrounds/ios14light_full.jpg");
         }
@@ -348,12 +357,18 @@ label {
     #welcome {
         font-size: 2.5rem;
         font-weight: 700;
-        margin-top: 20vh;
-        margin-bottom: 5vh;
+        margin-top: 5vh;
+        margin-bottom: 15vh;
     }
 
     #userList {
         margin: 0;
+        position: fixed;
+        bottom: 4rem;
+    }
+
+    .user {
+        margin: 0.35rem;
     }
 
     #header {
@@ -374,6 +389,7 @@ label {
     }
 
     #navbar {
+        margin: 0;
         width: 100%;
         display: flex;
         flex-wrap: wrap;
@@ -383,7 +399,7 @@ label {
     #navbar > div {
         padding: 0.3rem 0;
         margin: 0.2rem;
-        width: 21vw;
+        width: 23%;
         text-align: center;
         color: #FFFFFF;
     }
@@ -405,8 +421,6 @@ label {
     }
 
     #addSpendingButtonContainer {
-        width: fit-content;
-        height: fit-content;
         position: fixed;
         bottom: 1rem;
         right: 1rem;
@@ -445,6 +459,17 @@ label {
 
     #priceAndPortion > div {
         width: 48%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    body {
+        margin: 0.75rem;
+    }
+
+    #navbar > div {
+        padding: 0.3rem 0.25rem;
+        width: unset;
     }
 }
 

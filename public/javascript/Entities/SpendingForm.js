@@ -7,6 +7,9 @@ class SpendingForm {
         this.form.id = 'spendingForm';
         this.priceAndPortion = document.createElement('div');
         this.priceAndPortion.id = 'priceAndPortion';
+
+        
+
         this.prepUserId();
         this.prepMerchantSection();
         this.prepNameSection();
@@ -166,7 +169,7 @@ class SpendingForm {
         sendJson({
             url: '/processNewSpending',
             json: json,
-            success: (spending) => this.addNewSpending(spending),
+            success: (spending) => this.app.user.addNewSpending(spending),
             error: () => console.error('spending not processed')
         });
     }
