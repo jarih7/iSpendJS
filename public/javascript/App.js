@@ -89,6 +89,11 @@ class App {
         this.ui.displayAddSpending(this.user);
         console.log('adding a spending');
     }
+
+    newAddSpending() {
+        this.ui.clearActiveViewContent();
+        this.ui.displayAddSpending(this.user);
+    }
     
     logIn(username) {
         let json = JSON.stringify({
