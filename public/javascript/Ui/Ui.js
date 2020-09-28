@@ -59,6 +59,8 @@ class Ui {
         this.searchButton = null;
         this.settingsButton = null;
         this.addSpendingButton = null;
+        this.formContainer = document.createElement('div');
+        this.formContainer.id = 'formContainer';
 
         this.activeButton = null;
         this.activeViewContent = null;
@@ -322,7 +324,9 @@ class Ui {
         this.switchView(this.addSpendingButton);
         //formContainer = node({ type: 'div', id: 'formContainer', child: this.app.spendingForm });
         this.spendingForm = new SpendingForm(this.app);
-        this.appendToActiveViewContent(this.spendingForm.displayMerchantChoice());
+        this.formContainer.innerHTML = '';
+        this.formContainer.appendChild(this.spendingForm.displayMerchantChoice());
+        this.appendToActiveViewContent(this.formContainer);
     }
 
     switchView(button) {

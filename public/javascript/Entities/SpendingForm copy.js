@@ -5,8 +5,8 @@ class SpendingForm {
         this.app = app;
         this.form = document.createElement('form');
         this.form.id = 'spendingForm';
-        this.priceAndPortion = document.createElement('div');
-        this.priceAndPortion.id = 'priceAndPortion';
+        //this.priceAndPortion = document.createElement('div');
+        //this.priceAndPortion.id = 'priceAndPortion';
 
         
 

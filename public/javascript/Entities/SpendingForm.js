@@ -6,6 +6,9 @@ class SpendingForm {
         this.formBody = document.createElement('div');
         this.formBody.id = 'spendingForm';
         this.formPageTitle = document.createElement('div');
+        this.formPageTitle.id = 'formPageTitle';
+        this.formPageContent = document.createElement('div');
+        this.formPageContent.id = 'formPageContent';
         this.app.ui.addSpendingButton.onclick = null;
     }
 
@@ -14,11 +17,14 @@ class SpendingForm {
         let merchants = [];
 
         for (let merchant of this.app.merchants) {
+            let mName = document.createElement('span');
+            mName.innerHTML = merchant.name;
+
             merchants.push(node({
                 type: 'div',
                 class: 'merchantButton',
                 id: 'merchant' + merchant.id,
-                html: merchant.name,
+                child: mName,
                 onclick: () => {
                     this.merchantId = merchant.id;
                     let selected = document.getElementById('merchant' + merchant.id);
@@ -40,7 +46,8 @@ class SpendingForm {
 
         this.formPageTitle.innerHTML = 'select merchant';
         this.formBody.appendChild(this.formPageTitle);
-        this.formBody.appendChild(merchantList);
+        this.formPageContent.appendChild(merchantList);
+        this.formBody.appendChild(this.formPageContent);
 
         this.app.ui.addSpendingButton.innerHTML = 'next';
         return this.drawSelf();
@@ -62,7 +69,9 @@ class SpendingForm {
 
         this.formPageTitle.innerHTML = 'enter spending title';
         this.formBody.appendChild(this.formPageTitle);
-        this.formBody.appendChild(spendingName);
+        this.formPageContent.innerHTML = '';
+        this.formPageContent.appendChild(spendingName);
+        this.formBody.appendChild(this.formPageContent);
 
         return this.drawSelf();
     }
@@ -87,6 +96,9 @@ class SpendingForm {
                     html: '50 %',
                     onclick: () => {
                         this.spendingPortion = 0.5;
+                        let selected = document.getElementById('halvePortionButton');
+                        document.getElementById('allPortionButton').classList.remove('selectedPortionButton');
+                        selected.classList.add('selectedPortionButton');
                     }
                 }),
                 node({
@@ -96,6 +108,9 @@ class SpendingForm {
                     html: '100 %',
                     onclick: () => {
                         this.spendingPortion = 1;
+                        let selected = document.getElementById('allPortionButton');
+                        document.getElementById('halvePortionButton').classList.remove('selectedPortionButton');
+                        selected.classList.add('selectedPortionButton');
                     }
                 })
             ]
@@ -106,10 +121,12 @@ class SpendingForm {
             this.displayFriends();
         }
 
-        this.formPageTitle.innerHTML = 'enter price';
+        this.formPageTitle.innerHTML = 'enter price and portion';
         this.formBody.appendChild(this.formPageTitle);
-        this.formBody.appendChild(spendingPrice);
-        this.formBody.appendChild(spendingPortions);
+        this.formPageContent.innerHTML = '';
+        this.formPageContent.appendChild(spendingPortions);
+        this.formPageContent.appendChild(spendingPrice);
+        this.formBody.appendChild(this.formPageContent);
 
         return this.drawSelf();
     }
@@ -148,7 +165,9 @@ class SpendingForm {
 
         this.formPageTitle.innerHTML = 'choose friend';
         this.formBody.appendChild(this.formPageTitle);
-        this.formBody.appendChild(friendsList);
+        this.formPageContent.innerHTML = '';
+        this.formPageContent.appendChild(friendsList);
+        this.formBody.appendChild(this.formPageContent);
 
         this.app.ui.addSpendingButton.innerHTML = 'save';
         return this.drawSelf();

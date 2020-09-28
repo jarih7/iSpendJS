@@ -302,7 +302,6 @@ body {
 }
 
 #spendingForm {
-    margin-top: 1rem;
     padding: 1rem;
     border-radius: 0.5rem;
     color: #FFFFFF;
@@ -323,12 +322,6 @@ label {
     display: flex;
     flex-direction: column;
     margin-bottom: 0.4rem;
-}
-
-#priceAndPortion {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 }
 
 #submitButton {
@@ -441,8 +434,26 @@ label {
         border-radius: 0.4rem;
     }
 
-    #spendingForm {
+    #formContainer {
+        position: fixed;
+        bottom: 5rem;
         width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    #formPageTitle {
+        font-size: 1.75rem;
+        font-weight: 600;
+    }
+
+    #spendingForm {
+        margin: 0 1rem;
+        width: 100%;
+        height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     #addSpendingForm {
@@ -451,15 +462,63 @@ label {
         justify-content: flex-start;
     }
 
-    #formContainer {
+    #spendingName, #spendingPrice {
         width: 100%;
-        position: absolute;
-        bottom: 5rem;
+        box-sizing: border-box;
+        border-radius: 0.5rem;
+        height: 2.5rem;
+        border: unset;
+        margin-top: 1rem;
     }
 
-    #priceAndPortion > div {
-        width: 48%;
+    #formPageContent {
+        width: 100%;
     }
+
+    #spendingPortions {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    #merchantList, #friendsList {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    span {
+        display: inline-block;
+        text-align: center;
+    }
+
+    .merchantButton, .portionButton, .friendButton {
+        width: 45%;
+        margin: 0.2rem;
+        padding: 0.4rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.5rem;
+
+        background-color: rgba(220, 220, 220, 0.5);
+        -webkit-backdrop-filter: blur(0.5rem);
+    }
+
+    .merchantButton:hover, .portionButton:hover, .friendButton:hover {
+        cursor: pointer;
+    }
+
+    .selectedMerchantButton, .selectedPortionButton, .selectedFriendButton {
+        background-color: rgb(240, 240, 240);
+        color: dodgerblue;
+    }
+
+    .portionButton {
+        padding: 0.2rem 0.5rem;
+    }
+
 }
 
 @media screen and (max-width: 320px) {
