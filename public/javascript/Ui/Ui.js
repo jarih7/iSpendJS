@@ -246,6 +246,7 @@ class Ui {
     }
 
     displayOverview(user) {
+        this.restoreAddSpendingButton();
         this.switchTitle('iSpend | Overview');
         this.switchView(this.overviewButton);
         //spendings already filled
@@ -291,6 +292,7 @@ class Ui {
     }
 
     displayHistory(user) {
+        this.restoreAddSpendingButton();
         this.switchTitle('iSpend | History');
         this.switchView(this.historyButton);
 
@@ -304,21 +306,23 @@ class Ui {
     }
 
     displaySearch(user) {
+        this.restoreAddSpendingButton();
         this.switchTitle('iSpend | Search');
         this.switchView(this.searchButton);
     }
 
     displaySettings(user) {
+        this.restoreAddSpendingButton();
         this.switchTitle('iSpend | Settings');
         this.switchView(this.settingsButton);
     }
 
-    displayAddSpending(user) {
+    displayAddSpendingForm(user) {
         this.switchTitle('iSpend | New Spending');
         this.switchView(this.addSpendingButton);
-
-        let formContainer = node({ type: 'div', id: 'formContainer', child: this.app.spendingForm });
-        this.appendToActiveViewContent(formContainer);
+        //formContainer = node({ type: 'div', id: 'formContainer', child: this.app.spendingForm });
+        this.spendingForm = new SpendingForm(this.app);
+        this.appendToActiveViewContent(this.spendingForm.displayMerchantChoice());
     }
 
     switchView(button) {
@@ -329,6 +333,11 @@ class Ui {
 
     switchTitle(title) {
         this.title.innerText = title;
+    }
+
+    restoreAddSpendingButton() {
+        this.addSpendingButton.innerHTML = 'add spending';
+        this.addSpendingButton.onclick = () => { this.app.addSpending() }
     }
 
 }

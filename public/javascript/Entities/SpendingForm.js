@@ -3,191 +3,185 @@
 class SpendingForm {
     constructor(app) {
         this.app = app;
-        this.form = document.createElement('form');
-        this.form.id = 'spendingForm';
-        this.priceAndPortion = document.createElement('div');
-        this.priceAndPortion.id = 'priceAndPortion';
-
-        
-
-        this.prepUserId();
-        this.prepMerchantSection();
-        this.prepNameSection();
-        this.prepPriceSection();
-        this.prepPortionSection();
-        this.prepDateSection();
-        this.prepFriendSection();
-        this.prepSubmitSection();
-    
-        return this.form;
+        this.formBody = document.createElement('div');
+        this.formBody.id = 'spendingForm';
+        this.formPageTitle = document.createElement('div');
+        this.app.ui.addSpendingButton.onclick = null;
     }
 
-    prepUserId() {
-        this.userId = document.createElement('input');
-        this.userId.type = 'text';
-        this.userId.value = this.app.user.id;
-        this.userId.name = 'userId';
-        this.userId.id = 'userId';
-    }
-
-    prepMerchantSection() {
-        this.merchantLabel = document.createElement('label');
-        this.merchantLabel.htmlFor = 'merchant';
-        this.merchantLabel.innerHTML = 'merchant';
-        this.merchantInput = document.createElement('select');
-        this.merchantInput.name = 'merchant';
-        this.merchantInput.id = 'merchantInput';
-        this.merchantInput.required = true;
+    displayMerchantChoice() {
+        this.clearFormBody();
+        let merchants = [];
 
         for (let merchant of this.app.merchants) {
-            let merchantOption = document.createElement('option');
-            merchantOption.value = merchant.name;
-            merchantOption.id = 'merchantOption';
-            merchantOption.innerHTML = merchant.name;
-            this.merchantInput.appendChild(merchantOption);
+            merchants.push(node({
+                type: 'div',
+                class: 'merchantButton',
+                id: 'merchant' + merchant.id,
+                html: merchant.name,
+                onclick: () => {
+                    this.merchantId = merchant.id;
+                    let selected = document.getElementById('merchant' + merchant.id);
+
+                    let all = document.getElementsByClassName('merchantButton');
+                    for (let merch of all)
+                        merch.classList.remove('selectedMerchantButton');
+                    selected.classList.add('selectedMerchantButton');
+                    this.app.ui.addSpendingButton.onclick = () => { this.displaySpendingName() }
+                }
+            }));
         }
 
-        this.appendDuo(this.merchantLabel, this.merchantInput, this.form);
-    }
-
-    prepNameSection() {
-        this.nameLabel = document.createElement('label');
-        this.nameLabel.htmlFor = 'spendingName';
-        this.nameLabel.innerHTML = 'spending title';
-        this.nameInput = document.createElement('input');
-        this.nameInput.type = 'text';
-        this.nameInput.name = 'spendingName';
-        this.nameInput.placeholder = 'groceries';
-        this.nameInput.id = 'spendingName';
-        this.nameInput.required = true;
-        this.appendDuo(this.nameLabel, this.nameInput, this.form);
-    }
-
-    prepPriceSection() {
-        this.priceLabel = document.createElement('label');
-        this.priceLabel.htmlFor = 'spendingPrice';
-        this.priceLabel.innerHTML = 'spending price';
-        this.priceInput = document.createElement('input');
-        this.priceInput.type = 'text';
-        this.priceInput.name = 'spendingPrice';
-        this.priceInput.id = 'priceInput';
-        this.priceInput.placeholder = '123.45';
-        this.priceInput.required = true;
-        this.appendDuo(this.priceLabel, this.priceInput, this.priceAndPortion);
-    }
-
-    prepPortionSection() {
-        this.portionLabel = document.createElement('label');
-        this.portionLabel.htmlFor = 'spendingPortion';
-        this.portionLabel.innerHTML = 'spending portion';
-        this.portionInput = document.createElement('select');
-        this.portionInput.name = 'spendingPortion';
-        this.portionInput.id = 'portionInput';
-        this.portionInput.required = true;
-
-        for (let portion of this.app.portions) {
-            let portionOption = document.createElement('option');
-            portionOption.value = portion.value;
-            portionOption.innerHTML = portion.value;
-            portionOption.className = 'portionOption';
-            this.portionInput.appendChild(portionOption);
-        }
-
-        this.appendDuo(this.portionLabel, this.portionInput, this.priceAndPortion);
-        this.form.appendChild(this.priceAndPortion);
-    }
-
-    prepDateSection() {
-        this.dateLabel = document.createElement('label');
-        this.dateLabel.htmlFor = 'date';
-        this.dateLabel.innerHTML = 'date';
-        this.dateInput = document.createElement('input');
-        this.dateInput.type = 'date';
-        this.dateInput.name = 'date';
-        this.dateInput.id = 'dateInput';
-        this.dateInput.required = false;
-        //this.appendDuo(this.dateLabel, this.dateInput);
-    }
-
-    prepFriendSection() {
-        this.friendLabel = document.createElement('label');
-        this.friendLabel.htmlFor = 'friend';
-        this.friendLabel.innerHTML = 'friend';
-        this.friendInput = document.createElement('select');
-        this.friendInput.name = 'friend';
-        this.friendInput.id = 'friendInput';
-        this.friendInput.required = true;
-
-        console.log('this app user friends:', this.app.user.friends);
-
-        for (let friend of this.app.user.friends) {
-            let friendOption = document.createElement('option');
-            friendOption.value = friend.username;
-            friendOption.innerHTML = friend.username;
-            friendOption.className = 'friendOption';
-            this.friendInput.appendChild(friendOption);
-        }
-
-        this.appendDuo(this.friendLabel, this.friendInput, this.form);
-    }
-
-    prepSubmitSection() {
-        this.submitButton = node({
+        let merchantList = node({
             type: 'div',
-            id: 'submitButton',
-            html: 'Submit',
-            onclick: () => {
-                this.submitForm();
-                console.log('going back to history');
-                this.app.history();
-            }
+            id: 'merchantList',
+            child: merchants
         });
 
-        this.form.appendChild(this.submitButton);
+        this.formPageTitle.innerHTML = 'select merchant';
+        this.formBody.appendChild(this.formPageTitle);
+        this.formBody.appendChild(merchantList);
+
+        this.app.ui.addSpendingButton.innerHTML = 'next';
+        return this.drawSelf();
     }
 
-    submitForm() {
-        let merchantOpts = document.getElementById('merchantInput');
-        let selectedMerchant = merchantOpts.options[merchantOpts.selectedIndex].value;
+    displaySpendingName() {
+        this.clearFormBody();
+        console.log('got merchant: ' + this.merchantId);
 
-        let friendOpts = document.getElementById('friendInput');
-        let selectedFriend = friendOpts.options[friendOpts.selectedIndex].value;
-
-        let portionOpts = document.getElementById('portionInput');
-        let selectedPortion = portionOpts.options[portionOpts.selectedIndex].value;
-
-        let json = JSON.stringify({
-            userId: this.app.user.id,
-            merchantName: selectedMerchant,
-            spendingName: this.nameInput.value,
-            spendingPrice: this.priceInput.value,
-            spendingPortion: selectedPortion,
-            date: this.dateInput.value,
-            friend: selectedFriend
+        let spendingName = node({
+            type: 'input',
+            id: 'spendingName'
         });
 
-        sendJson({
-            url: '/processNewSpending',
-            json: json,
-            success: (spending) => this.app.user.addNewSpending(spending),
-            error: () => console.error('spending not processed')
+        this.app.ui.addSpendingButton.onclick = () => {
+            this.spendingName = document.getElementById('spendingName').value;
+            this.displayPrice();
+        }
+
+        this.formPageTitle.innerHTML = 'enter spending title';
+        this.formBody.appendChild(this.formPageTitle);
+        this.formBody.appendChild(spendingName);
+
+        return this.drawSelf();
+    }
+
+    displayPrice() {
+        this.clearFormBody();
+        console.log('got name: ' + this.spendingName);
+
+        let spendingPrice = node({
+            type: 'input',
+            id: 'spendingPrice'
         });
-    }
 
-    addNewSpending(spending) {
-        //add new spending from json data received above
-    }
-
-    appendDuo(label, input, target) {
-        let pair = node({
+        let spendingPortions = node({
             type: 'div',
-            class: 'formPair',
+            id: 'spendingPortions',
             child: [
-                label,
-                input
+                node({
+                    type: 'div',
+                    class: 'portionButton',
+                    id: 'halvePortionButton',
+                    html: '50 %',
+                    onclick: () => {
+                        this.spendingPortion = 0.5;
+                    }
+                }),
+                node({
+                    type: 'div',
+                    class: 'portionButton',
+                    id: 'allPortionButton',
+                    html: '100 %',
+                    onclick: () => {
+                        this.spendingPortion = 1;
+                    }
+                })
             ]
         });
 
-        target.appendChild(pair);
+        this.app.ui.addSpendingButton.onclick = () => {
+            this.spendingPrice = document.getElementById('spendingPrice').value;
+            this.displayFriends();
+        }
+
+        this.formPageTitle.innerHTML = 'enter price';
+        this.formBody.appendChild(this.formPageTitle);
+        this.formBody.appendChild(spendingPrice);
+        this.formBody.appendChild(spendingPortions);
+
+        return this.drawSelf();
+    }
+
+    displayFriends() {
+        this.clearFormBody();
+        console.log('got price: ' + this.spendingPrice);
+        console.log('got portion: ' + this.spendingPortion);
+        this.friendUsername = 'nobody';
+        let friends = [];
+
+        for (let friend of this.app.user.friends) {
+            friends.push(node({
+                type: 'div',
+                class: 'friendButton',
+                id: 'friend' + friend.id,
+                html: friend.username,
+                onclick: () => {
+                    this.friendUsername = friend.username;
+                    let selected = document.getElementById('friend' + friend.id);
+
+                    let all = document.getElementsByClassName('friendButton');
+                    for (let fr of all)
+                        fr.classList.remove('selectedFriendButton');
+                    selected.classList.add('selectedFriendButton');
+                    this.app.ui.addSpendingButton.onclick = () => { this.saveSpending() }
+                }
+            }));
+        }
+
+        let friendsList = node({
+            type: 'div',
+            id: 'friendsList',
+            child: friends
+        });
+
+        this.formPageTitle.innerHTML = 'choose friend';
+        this.formBody.appendChild(this.formPageTitle);
+        this.formBody.appendChild(friendsList);
+
+        this.app.ui.addSpendingButton.innerHTML = 'save';
+        return this.drawSelf();
+    }
+
+    saveSpending() {
+        console.log('got friend: ' + this.friendUsername);
+
+        let json = JSON.stringify({
+            userId: this.app.user.id,
+            merchantId: this.merchantId,
+            spendingName: this.spendingName,
+            spendingPrice: this.spendingPrice,
+            spendingPortion: this.spendingPortion,
+            date: null,
+            friend: this.friendUsername
+        });
+
+        sendJson({
+            url: 'processNewSpending',
+            json: json,
+            success: () => {
+                this.app.reloadSpendings();
+            },
+            error: () => console.error('spending not saved, error occured')
+        });
+    }
+
+    drawSelf() {
+        return this.formBody;
+    }
+
+    clearFormBody() {
+        this.formBody.innerHTML = '';
     }
 }

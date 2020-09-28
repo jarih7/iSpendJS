@@ -32,7 +32,6 @@ class User {
     }
 
     loadSpendings() {
-
         let json = JSON.stringify({
             id: this.id,
         });
@@ -50,7 +49,6 @@ class User {
     }
 
     loadFriends() {
-
         let json = JSON.stringify({
             id: this.id,
         });

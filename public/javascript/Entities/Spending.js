@@ -5,6 +5,10 @@ function compareSpendings(a, b) {
         return 1;
     if (a.date.getTime() > b.date.getTime())
         return -1;
+    if (a.id < b.id)
+        return 1;
+    if (a.id > b.id)
+        return -1;
     return 0;
 }
 
@@ -16,6 +20,7 @@ class Spending {
         this.price = data.price;
         this.portion = data.portion;
 
+        //console.log('DATE DATA: ' + data.date);
         let dateTimeString = new String(data.date.date);
         let dateString = dateTimeString.split(' ')[0];
         this.date = new Date(dateString);

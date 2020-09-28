@@ -57,7 +57,6 @@ class App {
     overview() {
         this.ui.clearActiveViewContent();
 
-
         this.user.onSpendingsLoaded = (user) => {
             this.ui.displayOverview(user);
         };
@@ -85,14 +84,20 @@ class App {
 
     addSpending() {
         this.ui.clearActiveViewContent();
-        this.spendingForm = new SpendingForm(this);
-        this.ui.displayAddSpending(this.user);
+        this.ui.displayAddSpendingForm(this.user);
         console.log('adding a spending');
     }
 
-    newAddSpending() {
+    reloadSpendings() {
         this.ui.clearActiveViewContent();
-        this.ui.displayAddSpending(this.user);
+        this.user.spendings = null;
+        this.user.loadSpendings();
+
+        this.user.onSpendingsLoaded = (user) => {
+            this.history();
+        };
+
+        console.log('reloading spendings');
     }
     
     logIn(username) {

@@ -176,8 +176,8 @@ class BaseController extends AbstractController
         $spendingName = strval($json['spendingName']);
         $spendingPrice = floatval($json['spendingPrice']);
         $spendingPortion = floatval($json['spendingPortion']);
-        $merchantName = strval($json['merchantName']);
-        $merchant = $this->getDoctrine()->getRepository(Merchant::class)->findOneBy(['name' => $merchantName]);
+        $merchantId = intval($json['merchantId']);
+        $merchant = $this->getDoctrine()->getRepository(Merchant::class)->find($merchantId);
 
         $spending = new Spending(1, $spendingName, $spendingPrice, $spendingPortion, new DateTime('now', new DateTimeZone('Europe/Prague')), $merchant, $user);
 
@@ -188,20 +188,6 @@ class BaseController extends AbstractController
         $em->flush();
 
         $jsonData = [];
-        $friendId = 0;
-        $friendUsername = '';
-
-        if ($friend != null) {
-            $friendId = $friend->getId();
-            $friendUsername = $friend->getUsername();
-        }
-
-        array_push($jsonData, ['id'             => $spending->getId(),
-                               'name'           => $spending->getName(), 'price' => $spending->getPrice(),
-                               'portion'        => $spending->getPortion(), 'date' => $spending->getDate(),
-                               'userId'         => $spending->getUser()->getId(), 'username' => $spending->getUser()->getUsername(),
-                               'spendingUserId' => $spending->getUser()->getId(), 'friendId' => $friendId,
-                               'friendUsername' => $friendUsername, 'merchantName' => $spending->getMerchant()->getName()]);
 
         return new JsonResponse($jsonData);
     }
