@@ -67,10 +67,8 @@ body {
 }
 
 @media (prefers-color-scheme: light) {
-    @media (max-height: 1440px) {
-        .backgroundWrapLogged {
-            background-image: url("visual/backgrounds/ios14light_1920.jpg");
-        }
+    .backgroundWrapLogged {
+        background-image: url("visual/backgrounds/ios14light_1920.jpg");
     }
 
     @media (min-height: 1441px) {
@@ -81,10 +79,8 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-    @media (max-height: 1440px) {
-        .backgroundWrapLogged {
-            background-image: url("visual/backgrounds/ios14dark_1920.jpg");
-        }
+    .backgroundWrapLogged {
+        background-image: url("visual/backgrounds/ios14dark_1920.jpg");
     }
 
     @media (min-height: 1441px) {
@@ -445,12 +441,13 @@ label {
     #formPageTitle {
         font-size: 1.75rem;
         font-weight: 600;
+        margin-bottom: 2rem;
     }
 
     #spendingForm {
         margin: 0 1rem;
         width: 100%;
-        height: 50vh;
+        height: 45vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -473,6 +470,7 @@ label {
 
     #formPageContent {
         width: 100%;
+        overflow: auto;
     }
 
     #spendingPortions {
@@ -482,10 +480,10 @@ label {
     }
 
     #merchantList, #friendsList {
+        width: 100%;
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
     }
 
     span {
@@ -494,9 +492,9 @@ label {
     }
 
     .merchantButton, .portionButton, .friendButton {
-        width: 45%;
+        width: 100%;
         margin: 0.2rem;
-        padding: 0.4rem 0;
+        padding: 0.6rem 0;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -529,6 +527,10 @@ label {
     #navbar > div {
         padding: 0.3rem 0.25rem;
         width: unset;
+    }
+
+    #spendingForm {
+        margin: 0 0.75rem;
     }
 }
 
