@@ -93,9 +93,10 @@ class SpendingForm {
                     type: 'div',
                     class: 'portionButton',
                     id: 'halvePortionButton',
-                    html: '50 %',
+                    html: 'shared',
                     onclick: () => {
                         this.spendingPortion = 0.5;
+                        this.friendUsername = 'vojtito';
                         let selected = document.getElementById('halvePortionButton');
                         document.getElementById('allPortionButton').classList.remove('selectedPortionButton');
                         selected.classList.add('selectedPortionButton');
@@ -105,9 +106,10 @@ class SpendingForm {
                     type: 'div',
                     class: 'portionButton',
                     id: 'allPortionButton',
-                    html: '100 %',
+                    html: 'not shared',
                     onclick: () => {
                         this.spendingPortion = 1;
+                        this.friendUsername = 'nobody';
                         let selected = document.getElementById('allPortionButton');
                         document.getElementById('halvePortionButton').classList.remove('selectedPortionButton');
                         selected.classList.add('selectedPortionButton');
@@ -118,7 +120,7 @@ class SpendingForm {
 
         this.app.ui.addSpendingButton.onclick = () => {
             this.spendingPrice = document.getElementById('spendingPrice').value;
-            this.displayFriends();
+            this.saveSpending();
         }
 
         this.formPageTitle.innerHTML = 'enter price and portion';
@@ -131,6 +133,7 @@ class SpendingForm {
         return this.drawSelf();
     }
 
+    /*
     displayFriends() {
         this.clearFormBody();
         console.log('got price: ' + this.spendingPrice);
@@ -172,6 +175,7 @@ class SpendingForm {
         this.app.ui.addSpendingButton.innerHTML = 'save';
         return this.drawSelf();
     }
+    */
 
     saveSpending() {
         console.log('got friend: ' + this.friendUsername);

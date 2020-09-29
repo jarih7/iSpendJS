@@ -66,27 +66,13 @@ body {
     background-repeat: no-repeat;
 }
 
-@media (prefers-color-scheme: light) {
-    .backgroundWrapLogged {
-        background-image: url("visual/backgrounds/ios14light_1920.jpg");
-    }
-
-    @media (min-height: 1441px) {
-        .backgroundWrapLogged {
-            background-image: url("visual/backgrounds/ios14light_full.jpg");
-        }
-    }
+.backgroundWrapLogged {
+    background-image: url("visual/backgrounds/ios14light_1920.jpg");
 }
 
 @media (prefers-color-scheme: dark) {
     .backgroundWrapLogged {
         background-image: url("visual/backgrounds/ios14dark_1920.jpg");
-    }
-
-    @media (min-height: 1441px) {
-        .backgroundWrapLogged {
-            background-image: url("visual/backgrounds/ios14dark_full.jpg");
-        }
     }
 }
 
@@ -447,7 +433,8 @@ label {
     #spendingForm {
         margin: 0 1rem;
         width: 100%;
-        height: 45vh;
+        height: 18rem;
+        max-height: 45vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -495,6 +482,7 @@ label {
         width: 100%;
         margin: 0.2rem;
         padding: 0.6rem 0;
+        font-weight: 500;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -511,12 +499,12 @@ label {
     .selectedMerchantButton, .selectedPortionButton, .selectedFriendButton {
         background-color: rgb(240, 240, 240);
         color: dodgerblue;
+        font-weight: 600;
     }
 
     .portionButton {
         padding: 0.2rem 0.5rem;
     }
-
 }
 
 @media screen and (max-width: 320px) {
